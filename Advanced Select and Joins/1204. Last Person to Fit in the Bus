@@ -1,0 +1,13 @@
+WITH OrderedQueue AS (
+  SELECT *, SUM(weight) OVER (ORDER BY turn) AS total_weight
+  FROM Queue
+),
+ValidBoarders AS (
+  SELECT *
+  FROM OrderedQueue
+  WHERE total_weight <= 1000
+)
+SELECT person_name
+FROM ValidBoarders
+ORDER BY turn DESC
+LIMIT 1;
